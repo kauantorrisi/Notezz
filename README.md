@@ -1,4 +1,4 @@
-# CRUD with Hive
+# Notezz
 
 Projeto feito com a inteção de estudar as funcionalidades da lib Hive.
 
