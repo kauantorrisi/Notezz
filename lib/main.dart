@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:hive_crud/boxes.dart';
-import 'package:hive_crud/note.dart';
+import 'package:hive_crud/db/boxes.dart';
+import 'package:hive_crud/models/note.dart';
 
 import 'pages/all_notes_page.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        textTheme: GoogleFonts.aBeeZeeTextTheme(),
       ),
       home: AllNotesPage(boxNotes: boxNotes),
     );

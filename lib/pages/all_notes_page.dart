@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
-import 'package:hive_crud/boxes.dart';
-import 'package:hive_crud/note.dart';
+import 'package:hive_crud/db/boxes.dart';
+import 'package:hive_crud/models/note.dart';
+import 'package:hive_crud/widgets/textformfield_widget.dart';
 
 class AllNotesPage extends StatefulWidget {
   const AllNotesPage({super.key, required this.boxNotes});
@@ -24,12 +25,13 @@ class _AllNotesPageState extends State<AllNotesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Notezzz App',
+          'Notezz 🐝',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
+      backgroundColor: Colors.grey[800],
       body: GridView.builder(
           itemCount: boxNotes.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -46,14 +48,13 @@ class _AllNotesPageState extends State<AllNotesPage> {
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, strokeAlign: 1),
                     color: Colors.yellow,
                   ),
                   child: Column(
                     children: [
                       Center(child: Text(note.title)),
-                      const Divider(
-                        color: Colors.black,
-                      ),
+                      const Divider(color: Colors.black),
                       Center(child: Text(note.description)),
                     ],
                   ),
@@ -70,25 +71,13 @@ class _AllNotesPageState extends State<AllNotesPage> {
                               context: context,
                               builder: (ctx) => Column(
                                 children: [
-                                  TextFormField(
+                                  TextFormFieldWidget(
                                     controller: titleController,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                      border: const OutlineInputBorder(),
-                                      hintText: note.title,
-                                      hintStyle:
-                                          const TextStyle(color: Colors.grey),
-                                    ),
+                                    hintText: note.title,
                                   ),
-                                  TextFormField(
+                                  TextFormFieldWidget(
                                     controller: descriptionController,
-                                    keyboardType: TextInputType.text,
-                                    decoration: InputDecoration(
-                                      border: const OutlineInputBorder(),
-                                      hintText: note.description,
-                                      hintStyle:
-                                          const TextStyle(color: Colors.grey),
-                                    ),
+                                    hintText: note.description,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
@@ -132,14 +121,15 @@ class _AllNotesPageState extends State<AllNotesPage> {
                                         });
                                       },
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                           );
                         },
-                        icon: const Icon(Icons.edit),
+                        icon: const Icon(Icons.edit, color: Colors.black),
                       ),
+                      const Spacer(),
                       IconButton(
                         onPressed: () {
                           setState(() {
@@ -162,23 +152,13 @@ class _AllNotesPageState extends State<AllNotesPage> {
           context: context,
           builder: (ctx) => Column(
             children: [
-              TextFormField(
+              TextFormFieldWidget(
                 controller: titleController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Titulo da nota',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
+                hintText: 'Título da nota',
               ),
-              TextFormField(
+              TextFormFieldWidget(
                 controller: descriptionController,
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Descrição da nota',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
+                hintText: 'Descrição da nota',
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
