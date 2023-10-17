@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_crud/db/boxes.dart';
 import 'package:hive_crud/models/note.dart';
 import 'package:hive_crud/pages/note_page.dart';
+import 'package:hive_crud/widgets/button_widget.dart';
 import 'package:hive_crud/widgets/textformfield_widget.dart';
 
 class AllNotesPage extends StatefulWidget {
@@ -90,46 +91,36 @@ class _AllNotesPageState extends State<AllNotesPage> {
                           setState(
                             () => showModalBottomSheet(
                               context: context,
+                              isScrollControlled: true,
                               backgroundColor: Colors.grey[850],
-                              builder: (ctx) => Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    child: Text('Edite sua nota:',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.yellowAccent[700],
-                                          fontSize: 26,
-                                        )),
-                                  ),
-                                  TextFormFieldWidget(
-                                    controller: titleController,
-                                    hintText: note.title,
-                                  ),
-                                  TextFormFieldWidget(
-                                    controller: descriptionController,
-                                    hintText: note.description,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: GestureDetector(
-                                      child: Container(
-                                        width: 200,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Editar',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
+                              builder: (ctx) => Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                      child: Text('Edite sua nota:',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.yellowAccent[700],
+                                            fontSize: 26,
+                                          )),
+                                    ),
+                                    TextFormFieldWidget(
+                                      controller: titleController,
+                                      hintText: note.title,
+                                    ),
+                                    TextFormFieldWidget(
+                                      controller: descriptionController,
+                                      hintText: note.description,
+                                    ),
+                                    ButtonWidget(
+                                      text: 'Editar',
                                       onTap: () {
                                         setState(() {
                                           if (titleController.text.isEmpty ||
@@ -153,8 +144,8 @@ class _AllNotesPageState extends State<AllNotesPage> {
                                         });
                                       },
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
@@ -182,60 +173,55 @@ class _AllNotesPageState extends State<AllNotesPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => showModalBottomSheet(
           context: context,
+          isScrollControlled: true,
           backgroundColor: Colors.grey[850],
-          builder: (ctx) => Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text('Adicione sua nota:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.yellowAccent[700],
-                      fontSize: 26,
-                    )),
-              ),
-              TextFormFieldWidget(
-                controller: titleController,
-                hintText: 'Título da nota',
-              ),
-              TextFormFieldWidget(
-                controller: descriptionController,
-                hintText: 'Descrição da nota',
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: GestureDetector(
-                  child: Container(
-                    width: 200,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Adicionar',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
+          builder: (ctx) => Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text('Adicione sua nota:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.yellowAccent[700],
+                        fontSize: 26,
+                      )),
+                ),
+                TextFormFieldWidget(
+                  controller: titleController,
+                  hintText: 'Título da nota',
+                ),
+                TextFormFieldWidget(
+                  controller: descriptionController,
+                  hintText: 'Descrição da nota',
+                ),
+                ButtonWidget(
+                  text: 'Adicionar',
                   onTap: () {
                     setState(() {
-                      boxNotes.put(
-                        'key_${titleController.text}',
-                        Note(
-                          title: titleController.text,
-                          description: descriptionController.text,
-                        ),
-                      );
-                      titleController.text = '';
-                      descriptionController.text = '';
-                      Navigator.pop(context);
+                      if (titleController.text.isEmpty &&
+                          descriptionController.text.isEmpty) {
+                        Navigator.pop(context);
+                      } else {
+                        boxNotes.put(
+                          'key_${titleController.text}',
+                          Note(
+                            title: titleController.text,
+                            description: descriptionController.text,
+                          ),
+                        );
+                        titleController.text = '';
+                        descriptionController.text = '';
+                        Navigator.pop(context);
+                      }
                     });
                   },
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
         backgroundColor: Colors.black,
