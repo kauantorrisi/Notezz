@@ -1,10 +1,9 @@
 # Notezz
 
-Projeto feito com a inteção de estudar as funcionalidades da lib Hive.
-
-Um app de notas que salva todas elas no dispositivo, além de poder edita-las e excluí-las.
+Um app pegajoso para você grudar suas mais incriveis idéias, anotações, etc!
 
 ### Preview:
 ![Tela Inicial](lib/assets/TelaInicial.png)
 ![Tela Criar Nota](lib/assets/TelaCriarNota.png)
 ![Tela Editar Nota](lib/assets/TelaEditarNota.png)
+![Tela Visualizar Nota](lib/assets/TelaVisualizarNota.png)
