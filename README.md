@@ -1,6 +1,7 @@
 # Notezz
 
 Um app pegajoso para você grudar suas mais incriveis idéias, anotações, etc!
+🍯🐝
 
 ### Preview:
 ![Tela Inicial](lib/assets/TelaInicial.png)
