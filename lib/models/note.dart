@@ -7,6 +7,7 @@ class Note {
   Note({
     required this.title,
     required this.description,
+    // this.createdTime,
     this.isFavorite = false,
   });
 
@@ -18,4 +19,7 @@ class Note {
 
   @HiveField(2)
   bool isFavorite;
+
+  // @HiveField(3)
+  // DateTime? createdTime;
 }

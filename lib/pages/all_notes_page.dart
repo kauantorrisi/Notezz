@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 
 import 'package:hive_crud/db/boxes.dart';
 import 'package:hive_crud/models/note.dart';
+import 'package:hive_crud/pages/note_page.dart';
 import 'package:hive_crud/widgets/textformfield_widget.dart';
 
 class AllNotesPage extends StatefulWidget {
@@ -31,33 +32,53 @@ class _AllNotesPageState extends State<AllNotesPage> {
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      backgroundColor: Colors.grey[800],
+      backgroundColor: Colors.grey[900],
       body: GridView.builder(
           itemCount: boxNotes.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2),
           itemBuilder: (ctx, i) {
             Note note = boxNotes.getAt(i);
+
             return Stack(
               alignment: AlignmentDirectional.bottomEnd,
               children: [
-                Container(
-                  width: 300,
-                  height: 300,
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black, strokeAlign: 1),
-                    color: Colors.yellow,
+                GestureDetector(
+                  child: Container(
+                    width: 300,
+                    height: 300,
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black, strokeAlign: 1),
+                      color: Colors.yellow,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          note.title,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        const Divider(color: Colors.black),
+                        Text(
+                          note.description,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      Center(child: Text(note.title)),
-                      const Divider(color: Colors.black),
-                      Center(child: Text(note.description)),
-                    ],
-                  ),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => NotePage(
+                                noteTitle: note.title,
+                                noteDescription: note.description,
+                              ))),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -69,8 +90,19 @@ class _AllNotesPageState extends State<AllNotesPage> {
                           setState(
                             () => showModalBottomSheet(
                               context: context,
+                              backgroundColor: Colors.grey[850],
                               builder: (ctx) => Column(
                                 children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    child: Text('Edite sua nota:',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.yellowAccent[700],
+                                          fontSize: 26,
+                                        )),
+                                  ),
                                   TextFormFieldWidget(
                                     controller: titleController,
                                     hintText: note.title,
@@ -81,7 +113,7 @@ class _AllNotesPageState extends State<AllNotesPage> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
-                                    child: InkWell(
+                                    child: GestureDetector(
                                       child: Container(
                                         width: 200,
                                         height: 100,
@@ -100,7 +132,7 @@ class _AllNotesPageState extends State<AllNotesPage> {
                                       ),
                                       onTap: () {
                                         setState(() {
-                                          if (titleController.text.isEmpty &&
+                                          if (titleController.text.isEmpty ||
                                               descriptionController
                                                   .text.isEmpty) {
                                             Navigator.pop(context);
@@ -150,8 +182,18 @@ class _AllNotesPageState extends State<AllNotesPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => showModalBottomSheet(
           context: context,
+          backgroundColor: Colors.grey[850],
           builder: (ctx) => Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text('Adicione sua nota:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.yellowAccent[700],
+                      fontSize: 26,
+                    )),
+              ),
               TextFormFieldWidget(
                 controller: titleController,
                 hintText: 'Título da nota',
@@ -162,7 +204,7 @@ class _AllNotesPageState extends State<AllNotesPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: InkWell(
+                child: GestureDetector(
                   child: Container(
                     width: 200,
                     height: 100,
